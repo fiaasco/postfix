@@ -6,8 +6,7 @@
       - postfix
       - mailutils
     state: present
-    cache_valid_time: 3600
-    update_cache: yes
+    update_cache: true
 
 - name: put mailname configuration
   lineinfile:
