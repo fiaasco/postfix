@@ -1,0 +1,12 @@
+---
+
+- name: prepare the certificate folder
+  file:
+    dest: "/etc/ssl/{{ inventory_hostname }}"
+    state: directory
+
+- name: copy over the chain and key file
+  copy:
+    content: "{{ item.value }}"
+    dest: "/etc/ssl/{{ inventory_hostname }}/postfix_{{ inventory_hostname }}.{{ item.key }}"
+  loop: "{{ postfix_certificate|dict2items }}"

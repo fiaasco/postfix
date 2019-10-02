@@ -1,0 +1,29 @@
+---
+
+- name: install postfix
+  apt:
+    name:
+      - postfix
+      - mailutils
+    state: present
+    cache_valid_time: 3600
+    update_cache: yes
+
+- name: put mailname configuration
+  lineinfile:
+    path: /etc/mailname
+    line: "{{ postfix_mailname }}"
+    owner: root
+    group: root
+    mode: "0644"
+    create: true
+  notify: restart postfix
+
+- name: put postfix configuration
+  template:
+    src: main.cf-Debian.j2
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart postfix

@@ -1,0 +1,14 @@
+---
+
+- name: Install certificates
+  include_tasks: certificates.yml
+  when: postfix_certificate
+
+- name: Install postfix
+  include_tasks: "install-{{ ansible_os_family }}.yml"
+
+- name: Start postfix
+  service:
+    name: postfix
+    state: started
+    enabled: true

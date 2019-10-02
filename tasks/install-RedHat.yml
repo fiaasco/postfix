@@ -1,0 +1,17 @@
+---
+
+- name: install postfix
+  yum:
+    name:
+      - postfix
+      - mailx
+    state: present
+
+- name: put postfix configuration
+  template:
+    src: main.cf-RedHat.j2
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart postfix

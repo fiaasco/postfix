@@ -1,0 +1,89 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+scenario:
+  name: ubuntu
+lint:
+  name: yamllint
+platforms:
+  - name: postfix-ubuntu-bionic
+    image: ubuntu:bionic
+    command: /lib/systemd/systemd
+    privileged: true
+  - name: postfix-ubuntu-xenial
+    image: ubuntu:xenial
+    command: /lib/systemd/systemd
+    privileged: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      callback_whitelist: profile_tasks
+      jinja2_extensions: jinja2.ext.do
+      gather_timeout: 30
+      timeout: 30
+    ssh_connection:
+      pipelining: true
+  inventory:
+    host_vars:
+      postfix-ubuntu-bionic:
+        postfix_certificate:
+          chain: |
+            -----BEGIN CERTIFICATE-----
+            MIIDWTCCAkECFB/vpuayQH1LmQLWQgmOADR/noJ/MA0GCSqGSIb3DQEBCwUAMGkx
+            CzAJBgNVBAYTAkJFMREwDwYDVQQIDAhCcnVzc2VsczERMA8GA1UEBwwIQnJ1c3Nl
+            bHMxDjAMBgNVBAoMBUZpYWFzMQswCQYDVQQLDAJJVDEXMBUGA1UEAwwOZmlhYXMt
+            bW9sZWN1bGUwHhcNMTkxMDAyMTMzOTM5WhcNMjAxMDAxMTMzOTM5WjBpMQswCQYD
+            VQQGEwJCRTERMA8GA1UECAwIQnJ1c3NlbHMxETAPBgNVBAcMCEJydXNzZWxzMQ4w
+            DAYDVQQKDAVGaWFhczELMAkGA1UECwwCSVQxFzAVBgNVBAMMDmZpYWFzLW1vbGVj
+            dWxlMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwV58RsENzDkTGokK
+            XTNavncUCUXSZNCH2RnmV9WCAtv8a5MCwzmoXFY1H6isxZObsENqcnpXMMKaFP7O
+            /HQg6FD9cMM1R4jMwANzLauAyboMBP9n7ce1/v6viktdCzUKBPUeTmdv0KZRzLAg
+            v0yItF5gwmB9tPM9HDz23822rwnsDuASkp1nQab8bFqZaHnAs4+CqU+eFCEt5ifY
+            +ozVbCdABdKkfaBiFq2F1U9HKeZ1WtzskxFGpd0UsqA5EVYEgO7iASrhTzwN0JcJ
+            6KFMo3lkauSUje+g9eI73N1bFellqVvN8Go0jdTp8m6QcFqOjtIKlKR+ycDMz1W5
+            z1lYRQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCrjxGxOi9/foF/fBpTLGqLSJsR
+            U/m3C8Wvr3jfzPs13qmjF/4NjVc3llN/sldytWApNW17QQZjwhOVT7ORmrBnId6T
+            I6cczerm57egHqDnbE7OaOjOM/U98t+0aospTUHC8gbkMwEJIpeOUWb9PcmsyA3B
+            UckzV+dUlHx0GdDtXVjsaRFa7+HVqoYOIvZNPsl5G1/ZWDrqeOEPA+5vkV+Cxyst
+            hnTubArBQxrCN83WWvcIG6+t2IXKVv5bHdBYBtyvcy0mH71DcBVDB5SRsxXEKagQ
+            3ifuoRF/pioSWToluNP5s6dI+sUP/4/qjT3JWWUL7SuP0NKaaKi32wQiCXQ2
+            -----END CERTIFICATE-----
+          key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEowIBAAKCAQEAwV58RsENzDkTGokKXTNavncUCUXSZNCH2RnmV9WCAtv8a5MC
+            wzmoXFY1H6isxZObsENqcnpXMMKaFP7O/HQg6FD9cMM1R4jMwANzLauAyboMBP9n
+            7ce1/v6viktdCzUKBPUeTmdv0KZRzLAgv0yItF5gwmB9tPM9HDz23822rwnsDuAS
+            kp1nQab8bFqZaHnAs4+CqU+eFCEt5ifY+ozVbCdABdKkfaBiFq2F1U9HKeZ1Wtzs
+            kxFGpd0UsqA5EVYEgO7iASrhTzwN0JcJ6KFMo3lkauSUje+g9eI73N1bFellqVvN
+            8Go0jdTp8m6QcFqOjtIKlKR+ycDMz1W5z1lYRQIDAQABAoIBAEN5CLxXmMzuDXBw
+            6SDkToGvY1po9qUe7ogetXVoltkQkd+niIs+jzTJD/hgDwlSHD1BCN+xOMNW5BT3
+            ZJpKm0D1Ibo7I1g2r9tAWOxSr7m0JYWI6WbbDPJRREdpTKogc8KPFWgeR7HylxBp
+            VMPrnLfzRqgMq1B8n5I+45XsXhZtMFi7An1sw99X+95ZerdkWZY0VfaryqnJTayJ
+            clmINkAe5HWPY8Pb6h0UUlyX4niz1yHVdR3cSXz34iM5WrIfsF3LvP/BSLZBspOm
+            97cELab82EUC9EAiFKMXDGF8EKx7CXIRmbXQ+WPRgMUrV4o8Eu5ZZITIu+JdUzro
+            JuCahvECgYEA7DaezUZTCo/S8n3ZEH7CbrWLH2dqkUlkM5DjQOW5YifDbqYmNqFj
+            AxkxNDFbYAVGDR/Hsu1ea0rCM1U/p/EqghpvrrAuMnovcblolvcbyvHMKRPYIjD3
+            ye+o0VEgLJIYhiX5s8G7XjIPDMTdfqkHnzoSfvGAvO0ouzT4Ypl0NisCgYEA0ZEb
+            2CrZXu6vJmKDOXc6MpLiiHrJ8aNsP3Np87XG3rAGcp3q7OfuOZa8Z02YHfIXHg74
+            IXlxChc/95XCYw3foFc55X8g2+KALJ8F136H6syPjUOrCfMKUy7Ap2TpLM6k9+e+
+            Nu/UDq5m7S3KEJjCJvbBCSwmCJPQprar87+eY08CgYBhpLaCXoanQArQSKt5AR04
+            jH0lDyfjRPZRxpvaUNwQMiW8UJxNSutV9Yz8aUa/a46okDGJykuUiIO8monEz5Fl
+            1K3EBXojTZTdKuqMNTvc6ZUeieB3Scy0QgiD9kgZhI70rTAKWZQtfP3xplN1L0RC
+            Uswgg45XCqYitOPURmDenwKBgGKyVYvD+mWkQabxRF3/EdCZrsiaE5uS3LsxTtfx
+            ZzyfaBn415hFTsOegxKfz6Fiz5JfeGrDeAJJmt2ukUL3WLd5/RFhgwcrsDPTnPu1
+            YqupNX5RPS9NYDJ21VLAyrRIihca9FGJN7TGXEEdjImud9nD4nvAaBUoEF9Drs34
+            E88vAoGBANCbA0u6+7Vrlb3rn42dwq30N9NjmGYMLW4b8hl/q/1w5w3K2KTzeO0r
+            /XqxQ5znz3G07PBC45s3BntYIXycwnNjkltW8hyqz/e0oYXzDM+w7E44JINghb3k
+            zdHRdJFqIHi6kkdVMIPyI9ykPQG7WzKSGHSrZbHjHOqIWrE/OR9V
+            -----END RSA PRIVATE KEY-----
+      postfix-ubuntu-xenial:
+        postfix_relayhost: relay.mol.ecule
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
