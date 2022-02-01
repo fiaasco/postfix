@@ -5,8 +5,11 @@ driver:
   name: docker
 scenario:
   name: ubuntu
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
   - name: postfix-ubuntu-bionic
     image: ubuntu:bionic
@@ -81,9 +84,5 @@ provisioner:
             -----END RSA PRIVATE KEY-----
       postfix-ubuntu-xenial:
         postfix_relayhost: relay.mol.ecule
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8

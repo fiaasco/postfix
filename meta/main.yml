@@ -2,6 +2,8 @@
 galaxy_info:
   author: Dieter Verhelst
   description: Postfix role
+  role_name: postfix
+  namespace: fiaasco
 
   license: MIT
 

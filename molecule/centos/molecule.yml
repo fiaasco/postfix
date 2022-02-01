@@ -5,8 +5,11 @@ driver:
   name: docker
 scenario:
   name: centos
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
   - name: postfix-centos
     image: centos:7
@@ -75,9 +78,5 @@ provisioner:
             /XqxQ5znz3G07PBC45s3BntYIXycwnNjkltW8hyqz/e0oYXzDM+w7E44JINghb3k
             zdHRdJFqIHi6kkdVMIPyI9ykPQG7WzKSGHSrZbHjHOqIWrE/OR9V
             -----END RSA PRIVATE KEY-----
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8

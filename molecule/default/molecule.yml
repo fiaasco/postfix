@@ -5,8 +5,11 @@ driver:
   name: docker
 scenario:
   name: default
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
   - name: postfix-debian-10
     image: debian:10
@@ -81,9 +84,5 @@ provisioner:
             -----END RSA PRIVATE KEY-----
       postfix-debian-9:
         postfix_relayhost: relay.mol.ecule
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8
