@@ -20,3 +20,7 @@ postfix_outbound_tls: may
 postfix_certificate: {}
 #  chain:
 #  key:
+
+# description: sender canonical address rewriting table
+# type: multiline string
+postfix_sender_canonical: |

@@ -7,6 +7,16 @@
 - name: Install postfix
   include_tasks: "install-{{ ansible_os_family }}.yml"
 
+- name: Configure sender canonical
+  copy:
+    content: |
+      {{ postfix_sender_canonical }}
+    dest: /etc/postfix/sender_canonical
+    owner: root
+    group: root
+    mode: "0644"
+  notify: postmap sender_canonical
+
 - name: Start postfix
   service:
     name: postfix
