@@ -4,9 +4,22 @@
   file:
     dest: "/etc/ssl/{{ inventory_hostname }}"
     state: directory
+    owner: root
+    group: root
+    mode: "0755"
 
-- name: copy over the chain and key file
+- name: copy over the chain file
   copy:
-    content: "{{ item.value }}"
-    dest: "/etc/ssl/{{ inventory_hostname }}/postfix_{{ inventory_hostname }}.{{ item.key }}"
-  loop: "{{ postfix_certificate|dict2items }}"
+    content: "{{ postfix_certificate.chain }}"
+    dest: "/etc/ssl/{{ inventory_hostname }}/postfix_{{ inventory_hostname }}.chain"
+    owner: postfix
+    group: postfix
+    mode: "0664"
+
+- name: copy over the key file
+  copy:
+    content: "{{ postfix_certificate.key }}"
+    dest: "/etc/ssl/{{ inventory_hostname }}/postfix_{{ inventory_hostname }}.key"
+    owner: postfix
+    group: postfix
+    mode: "0640"

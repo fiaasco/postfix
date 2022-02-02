@@ -4,15 +4,17 @@ dependency:
 driver:
   name: docker
 scenario:
-  name: centos
+  name: rocky
 lint: |
   set -e
   yamllint .
   ansible-lint
   flake8
 platforms:
-  - name: postfix-centos
-    image: centos:7
+  - name: postfix-rocky8
+    groups:
+      - postfix
+    image: rockylinux/rockylinux:8
     command: /sbin/init
     privileged: true
 provisioner:
@@ -27,7 +29,7 @@ provisioner:
       pipelining: true
   inventory:
     host_vars:
-      postfix-centos:
+      postfix-rocky8:
         postfix_certificate:
           chain: |
             -----BEGIN CERTIFICATE-----
