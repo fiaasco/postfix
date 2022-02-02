@@ -8,7 +8,7 @@ scenario:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint --exclude molecule
   flake8
 platforms:
   - name: postfix-debian-11
