@@ -5,3 +5,8 @@
     name: postfix
     state: restarted
     enabled: true
+
+- name: postmap sender_canonical
+  command:
+    cmd: postmap sender_canonical
+    chdir: /etc/postfix

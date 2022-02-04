@@ -1,3 +1,7 @@
+# {{ ansible_managed }}
+
+compatibility_level = 2
+
 queue_directory = /var/spool/postfix
 command_directory = /usr/sbin
 daemon_directory = /usr/libexec/postfix
@@ -8,7 +12,7 @@ mail_owner = postfix
 
 myhostname = {{ postfix_mailname }}
 #mydomain = domain.tld
-#myorigin = $myhostname
+myorigin = /etc/mailname
 
 
 # TLS parameters
@@ -59,3 +63,6 @@ setgid_group = postdrop
 html_directory = no
 
 manpage_directory = /usr/share/man
+
+# address rewriting
+canonical_maps =  hash:/etc/postfix/canonical

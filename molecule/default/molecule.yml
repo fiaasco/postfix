@@ -5,15 +5,18 @@ driver:
   name: docker
 scenario:
   name: default
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint --exclude molecule
+  flake8
 platforms:
-  - name: postfix-debian-10
-    image: debian:10
+  - name: postfix-debian-11
+    image: debian:11
     command: /lib/systemd/systemd
     privileged: true
-  - name: postfix-debian-9
-    image: debian:9
+  - name: postfix-debian-10
+    image: debian:10
     command: /lib/systemd/systemd
     privileged: true
 provisioner:
@@ -28,7 +31,7 @@ provisioner:
       pipelining: true
   inventory:
     host_vars:
-      postfix-debian-10:
+      postfix-debian-11:
         postfix_certificate:
           chain: |
             -----BEGIN CERTIFICATE-----
@@ -79,11 +82,7 @@ provisioner:
             /XqxQ5znz3G07PBC45s3BntYIXycwnNjkltW8hyqz/e0oYXzDM+w7E44JINghb3k
             zdHRdJFqIHi6kkdVMIPyI9ykPQG7WzKSGHSrZbHjHOqIWrE/OR9V
             -----END RSA PRIVATE KEY-----
-      postfix-debian-9:
+      postfix-debian-10:
         postfix_relayhost: relay.mol.ecule
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8

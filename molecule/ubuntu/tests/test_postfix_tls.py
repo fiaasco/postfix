@@ -24,8 +24,8 @@ def test_postfix_tls_chain(host, item):
     """
     f = host.file('/etc/ssl/postfix-ubuntu-bionic/postfix_postfix-ubuntu-bionic.%s' % item)
     assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+    assert f.user == 'postfix'
+    assert f.group == 'postfix'
 
 
 def test_postfix_tls(host):

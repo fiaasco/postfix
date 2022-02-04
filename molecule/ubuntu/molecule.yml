@@ -5,15 +5,18 @@ driver:
   name: docker
 scenario:
   name: ubuntu
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint --exclude molecule
+  flake8
 platforms:
   - name: postfix-ubuntu-bionic
     image: ubuntu:bionic
     command: /lib/systemd/systemd
     privileged: true
-  - name: postfix-ubuntu-xenial
-    image: ubuntu:xenial
+  - name: postfix-ubuntu-focal
+    image: ubuntu:focal
     command: /lib/systemd/systemd
     privileged: true
 provisioner:
@@ -79,11 +82,7 @@ provisioner:
             /XqxQ5znz3G07PBC45s3BntYIXycwnNjkltW8hyqz/e0oYXzDM+w7E44JINghb3k
             zdHRdJFqIHi6kkdVMIPyI9ykPQG7WzKSGHSrZbHjHOqIWrE/OR9V
             -----END RSA PRIVATE KEY-----
-      postfix-ubuntu-xenial:
+      postfix-ubuntu-focal:
         postfix_relayhost: relay.mol.ecule
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8
